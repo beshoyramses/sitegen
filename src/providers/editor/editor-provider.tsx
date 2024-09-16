@@ -366,7 +366,6 @@ export const EditorContext = createContext<{
 
 type EditorProps = {
   children: React.ReactNode
-  subaccountId: string
   funnelId: string
   pageDetails: FunnelPage
 }
