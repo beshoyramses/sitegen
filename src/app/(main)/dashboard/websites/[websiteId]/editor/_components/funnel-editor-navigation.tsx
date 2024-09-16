@@ -12,7 +12,7 @@ import {
 import { upsertWebsitePage } from '@/lib/firebase'
 // import { saveActivityLogsNotification, upsertFunnelPage } from '@/lib/queries'
 import { DeviceTypes, useEditor } from '@/providers/editor/editor-provider'
-import { FunnelPage } from '@prisma/client'
+// Remove this line: import { FunnelPage } from '@prisma/client'
 import clsx from 'clsx'
 import {
   ArrowLeftCircle,
@@ -31,10 +31,8 @@ import { CheckCircle } from 'lucide-react';
 
 type Props = {
   funnelId: string
-  funnelPageDetails: FunnelPage
+  funnelPageDetails: any // Use a more specific type if available
 }
-
-
 
 const FunnelEditorNavigation = ({
   funnelId,
@@ -86,15 +84,12 @@ const FunnelEditorNavigation = ({
   const handleOnSave = async () => {
     try {
        const reponse = await upsertWebsitePage(funnelId, funnelPageDetails.id, content);
-       
-
-        alert("Saved succefully")
-      
+        alert("Saved successfully")
     } catch (error) {
       toast('Oops!', {
         description: 'Could not save editor',
         style: {
-          backgroundColor: '#FF4D4D', // Light red for errors
+          backgroundColor: '#FF4D4D',
           color: '#FFFFFF',
           borderRadius: '8px',
           padding: '16px',
@@ -201,9 +196,7 @@ const FunnelEditorNavigation = ({
             <Undo2 />
           </Button>
           <Button
-            disabled={
-              !(state.history.currentIndex < state.history.history.length - 1)
-            }
+            disabled={!(state.history.currentIndex < state.history.history.length - 1)}
             onClick={handleRedo}
             variant={'ghost'}
             size={'icon'}
@@ -228,4 +221,4 @@ const FunnelEditorNavigation = ({
   )
 }
 
-export default FunnelEditorNavigation
+export default FunnelEditorNavigation;
