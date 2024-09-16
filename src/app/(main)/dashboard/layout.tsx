@@ -1,7 +1,11 @@
+import React, { ReactNode } from 'react'
 import Sidebar from '@/components/Sidebar'
-import React from 'react'
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex md:gap-[25px]">
       <Sidebar />
