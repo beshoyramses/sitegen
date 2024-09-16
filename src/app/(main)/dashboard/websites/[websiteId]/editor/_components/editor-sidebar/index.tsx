@@ -27,7 +27,6 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
       <Tabs className="w-full" defaultValue="Settings">
         {/* Sidebar tabs navigation */}
         <SheetContent
-          showX={false}
           side="right"
           className={clsx(
             'mt-[97px] w-16 z-[80] shadow-none p-0 transition-all overflow-hidden bg-gray-900',
@@ -39,7 +38,6 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
 
         {/* Main content of the sidebar */}
         <SheetContent
-          showX={false}
           side="right"
           className={clsx(
             'mt-[97px] w-80 z-[40] shadow-none p-0 mr-16 bg-gray-800 text-gray-200 h-full transition-all overflow-hidden hide-scrool',
