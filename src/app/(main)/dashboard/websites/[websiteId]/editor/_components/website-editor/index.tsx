@@ -31,7 +31,9 @@ const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
     const fetchData = async () => {
       try {
         const response = await getPage(websiteId, funnelPageId)
-        if (response) {
+        console.log('Fetched page data:', response) // Log the response to inspect structure
+
+        if (response && response.content) { // Ensure content exists
           dispatch({
             type: 'LOAD_DATA',
             payload: {
@@ -39,6 +41,8 @@ const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
               withLive: !!liveMode,
             },
           })
+        } else {
+          console.error('No content found in the response')
         }
       } catch (error) {
         console.error('Failed to fetch page data:', error)
