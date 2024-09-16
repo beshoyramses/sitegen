@@ -7,6 +7,11 @@ import { EyeOff } from 'lucide-react'
 import React, { useEffect, useCallback, useMemo } from 'react'
 import Recursive from './website-editor-components/recursive'
 
+interface PageResponse {
+  id: string;
+  content?: string; // 'content' may or may not exist
+}
+
 type Props = { 
   funnelPageId: string; 
   liveMode?: boolean; 
@@ -30,11 +35,10 @@ const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getPage(websiteId, funnelPageId)
+        const response: PageResponse = await getPage(websiteId, funnelPageId)
         console.log('Fetched page data:', response) // Log the response to inspect its structure
 
-        // Ensure response and content exist, and cast content to string before parsing
-        if (response && typeof response.content === 'string') {
+        if (response && response.content) { // Check if 'content' exists and is a string
           dispatch({
             type: 'LOAD_DATA',
             payload: {
@@ -43,7 +47,7 @@ const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
             },
           })
         } else {
-          console.error('No valid content found in the response')
+          console.error('No content found in the response')
         }
       } catch (error) {
         console.error('Failed to fetch page data:', error)
