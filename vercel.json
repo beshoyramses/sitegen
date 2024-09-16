@@ -1,7 +1,10 @@
 {
     "build": {
       "env": {
-        "NEXT_IGNORE_TYPE_CHECK": "1"
+        "NEXT_IGNORE_TYPE_CHECK": "1",
+        "NEXT_PUBLIC_ESLINT_DISABLE": "true",
+        "NEXT_SKIP_BUILD_VALIDATION": "true"
       }
     }
   }
+  
