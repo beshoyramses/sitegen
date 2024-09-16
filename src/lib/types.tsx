@@ -1,7 +1,18 @@
-export type ContactUserFormSchema = {
-  name: string;       // User's full name
-  email: string;      // User's email address
-  message: string;    // Message content
-  phone?: string;     // Optional phone number
-  preferredContactMethod?: 'email' | 'phone'; // Optional preferred contact method
-};
+import { z } from 'zod';
+
+export const ContactUserFormSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  message: z.string(),
+  phone: z.string().optional(),
+  preferredContactMethod: z.enum(['email', 'phone']).optional(),
+});
+
+
+type ContactUserFormType = z.infer<typeof ContactUserFormSchema>;
+
+export interface Props {
+  title: string;
+  subTitle: string;
+  apiCall: (values: ContactUserFormType) => any;
+}
