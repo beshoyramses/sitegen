@@ -5,10 +5,25 @@ import { fetchWebsiteById, fetchPagesForWebsite } from "@/lib/firebase";
 import AddPageModal from "@/components/AddPageModal"; // Import the modal component
 import { useRouter } from "next/navigation";
 
+// Define the type for website
+interface Website {
+  id: string;
+  name: string;
+  domain?: string;
+  [key: string]: any; // Adjust according to the structure of the website data
+}
+
+interface Page {
+  id: string;
+  title: string;
+  desc?: string;
+  imageUrl?: string;
+}
+
 const ManageWebsitePage = () => {
   const { websiteId } = useParams();
-  const [website, setWebsite] = useState(null);
-  const [pages, setPages] = useState([]);
+  const [website, setWebsite] = useState<Website | null>(null); // Update type
+  const [pages, setPages] = useState<Page[]>([]); // Define pages type
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility
   const router = useRouter();
 
@@ -17,7 +32,7 @@ const ManageWebsitePage = () => {
       const loadWebsiteAndPages = async () => {
         try {
           const websiteData = await fetchWebsiteById(websiteId as string);
-          setWebsite(websiteData);
+          setWebsite(websiteData); // Should now match the defined Website type
 
           const pagesData = await fetchPagesForWebsite(websiteId as string);
           setPages(pagesData);
@@ -37,8 +52,6 @@ const ManageWebsitePage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  console.log(pages)
 
   return (
     <div className="min-h-screen p-2 py-0 w-full">
@@ -79,9 +92,7 @@ const ManageWebsitePage = () => {
                   <h3 className="text-xl font-semibold text-gray-100 truncate">
                     {page.title}
                   </h3>
-                  <span className="text-sm text-gray-400">
-                   16 days ago
-                  </span>
+                  <span className="text-sm text-gray-400">16 days ago</span>
                 </div>
 
                 {page.imageUrl ? (
@@ -123,7 +134,7 @@ const ManageWebsitePage = () => {
                   <button
                     className="text-green-400 hover:text-red-300 flex items-center space-x-2"
                     onClick={() => {
-                      router.push(`/${website.domain}/${page.id}`)
+                      router.push(`/${website.domain}/${page.id}`);
                     }}
                   >
                     <span>Visit</span>
