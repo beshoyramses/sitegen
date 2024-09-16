@@ -32,10 +32,10 @@ const ManageWebsitePage = () => {
       const loadWebsiteAndPages = async () => {
         try {
           const websiteData = await fetchWebsiteById(websiteId as string);
-          setWebsite(websiteData); // Should now match the defined Website type
+          setWebsite(websiteData as any); // Should now match the defined Website type
 
           const pagesData = await fetchPagesForWebsite(websiteId as string);
-          setPages(pagesData);
+          setPages(pagesData as any);
         } catch (error) {
           console.error("Error loading website and pages:", error);
         }
