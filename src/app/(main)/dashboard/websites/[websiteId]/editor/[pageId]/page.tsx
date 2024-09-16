@@ -8,7 +8,7 @@ import FunnelEditorSidebar from "../_components/editor-sidebar";
 import FunnelEditor from "../_components/website-editor";
 import { getPage } from "@/lib/firebase";
 
-const Page = ({ params }) => {
+const Page = ({ params }: any) => {
   const { websiteId, pageId } = useParams();
   const [funnelPageDetails, setFunnelPageDetails] = useState(null);
   const [loading, setLoading] = useState(true);
