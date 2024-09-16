@@ -32,7 +32,6 @@ import { CheckCircle } from 'lucide-react';
 type Props = {
   funnelId: string
   funnelPageDetails: FunnelPage
-  subaccountId: string
 }
 
 
@@ -40,7 +39,6 @@ type Props = {
 const FunnelEditorNavigation = ({
   funnelId,
   funnelPageDetails,
-  subaccountId,
 }: Props) => {
   const router = useRouter()
   const { state, dispatch } = useEditor()
