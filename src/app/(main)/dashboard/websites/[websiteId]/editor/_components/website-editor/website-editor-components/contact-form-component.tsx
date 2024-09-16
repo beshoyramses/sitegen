@@ -1,27 +1,19 @@
 'use client'
 import ContactForm from '@/components/forms/contact-form'
 import { Badge } from '@/components/ui/badge'
-import { toast } from '@/components/ui/use-toast'
 import { EditorBtns } from '@/lib/constants'
-import {fetchWebsiteById} from "@/lib/firebase"
 
-import { ContactUserFormSchema } from '@/lib/types'
 import { EditorElement, useEditor } from '@/providers/editor/editor-provider'
 import clsx from 'clsx'
 import { Trash } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
 import React from 'react'
-import { z } from 'zod'
-
 type Props = {
   element: EditorElement
 }
 
 const ContactFormComponent = (props: Props) => {
-  const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor()
-  const router = useRouter()
-
+  const { dispatch, state} = useEditor()
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
     if (type === null) return
     e.dataTransfer.setData('componentType', type)
@@ -39,20 +31,20 @@ const ContactFormComponent = (props: Props) => {
 
   const styles = props.element.styles
 
-  const goToNextPage = async () => {
-    if (!state.editor.liveMode) return
-    const funnelPages = await fetchWebsiteById(funnelId)
-    if (!funnelPages || !pageDetails) return
-    if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
-      const nextPage = funnelPages.FunnelPages.find(
-        (page) => page.order === pageDetails.order + 1
-      )
-      if (!nextPage) return
-      router.replace(
-        `${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`
-      )
-    }
-  }
+  // const goToNextPage = async () => {
+  //   if (!state.editor.liveMode) return
+  //   const funnelPages = await fetchWebsiteById(funnelId)
+  //   if (!funnelPages || !pageDetails) return
+  //   if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
+  //     const nextPage = funnelPages.FunnelPages.find(
+  //       (page) => page.order === pageDetails.order + 1
+  //     )
+  //     if (!nextPage) return
+  //     router.replace(
+  //       `${process.env.NEXT_PUBLIC_SCHEME}${funnelPages}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`
+  //     )
+  //   }
+  // }
 
   const handleDeleteElement = () => {
     dispatch({
@@ -61,35 +53,36 @@ const ContactFormComponent = (props: Props) => {
     })
   }
 
-  const onFormSubmit = async (
-    values: z.infer<typeof ContactUserFormSchema>
-  ) => {
-    if (!state.editor.liveMode) return
+  // const onFormSubmit = async (
+  //   values: z.infer<typeof ContactUserFormSchema>
+  // ) => {
+  //   if (!state.editor.liveMode) return
 
-    try {
-      const response = await upsertContact({
-        ...values,
-        subAccountId: subaccountId,
-      })
-      //WIP Call trigger endpoint
-      await saveActivityLogsNotification({
-        agencyId: undefined,
-        description: `A New contact signed up | ${response?.name}`,
-        subaccountId: subaccountId,
-      })
-      toast({
-        title: 'Success',
-        description: 'Successfully Saved your info',
-      })
-      await goToNextPage()
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Failed',
-        description: 'Could not save your information',
-      })
-    }
-  }
+  //   // try {
+  //   //   const response = await upsertContact({
+  //   //     ...values,
+  //   //     subAccountId: subaccountId,
+  //   //   })
+  //   //   //WIP Call trigger endpoint
+  //   //   await saveActivityLogsNotification({
+  //   //     agencyId: undefined,
+  //   //     description: `A New contact signed up | ${response?.name}`,
+  //   //     subaccountId: subaccountId,
+  //   //   })
+  //   //   toast({
+  //   //     title: 'Success',
+  //   //     description: 'Successfully Saved your info',
+  //   //   })
+  //   //   await goToNextPage()
+  //   // } 
+  //   // catch (error) {
+  //   //   toast({
+  //   //     variant: 'destructive',
+  //   //     title: 'Failed',
+  //   //     description: 'Could not save your information',
+  //   //   })
+  //   // }
+  // }
 
   return (
     <div
@@ -117,7 +110,7 @@ const ContactFormComponent = (props: Props) => {
       <ContactForm
         subTitle="Contact Us"
         title="Want a free quote? We can help you"
-        apiCall={onFormSubmit}
+        apiCall={() => {}}
       />
       {state.editor.selectedElement.id === props.element.id &&
         !state.editor.liveMode && (
