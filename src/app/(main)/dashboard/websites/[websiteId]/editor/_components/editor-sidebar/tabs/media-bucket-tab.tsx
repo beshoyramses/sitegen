@@ -9,12 +9,12 @@ type Props = {
 }
 
 const MediaBucketTab = (props: Props) => {
-  const [data, setdata] = useState<"">(null)
+  const [data, setData] = useState<string | null>(null); // Allows null as an initial value
 
   useEffect(() => {
     const fetchData = async () => {
-    //   const response = await getMedia(props.subaccountId)
-    //   setdata(response)
+      // const response = await getMedia(props.subaccountId)
+      // setData(response)
     }
     fetchData()
   }, [props.subaccountId])
@@ -29,4 +29,4 @@ const MediaBucketTab = (props: Props) => {
   )
 }
 
-export default MediaBucketTab
+export default MediaBucketTab;
