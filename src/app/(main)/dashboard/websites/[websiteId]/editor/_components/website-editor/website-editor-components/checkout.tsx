@@ -1,18 +1,16 @@
 import { Badge } from '@/components/ui/badge'
 import clsx from 'clsx'
 import { Trash } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import Loading from '@/components/global/loading'
-import { useEditor } from '@/providers/editor/editor-provider'
+import { EditorElement, useEditor } from '@/providers/editor/editor-provider'
 
 type Props = {
   element: EditorElement
 }
 
 const Checkout = (props: Props) => {
-  const { dispatch, state, subaccountId, funnelId } = useEditor()
-  const router = useRouter()
+  const { dispatch, state, funnelId } = useEditor()
   const [paymentToken, setPaymentToken] = useState('')
   const styles = props.element.styles
 
@@ -27,7 +25,6 @@ const Checkout = (props: Props) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              subaccountId,
               funnelId,
               // Add any required information for Paymob payment here
             }),
@@ -44,10 +41,10 @@ const Checkout = (props: Props) => {
       }
     }
 
-    if (subaccountId && funnelId) {
+    if ( funnelId) {
       fetchPaymentToken()
     }
-  }, [subaccountId, funnelId])
+  }, [funnelId])
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     e.dataTransfer.setData('componentType', type)
