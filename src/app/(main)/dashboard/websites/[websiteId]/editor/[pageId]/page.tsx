@@ -10,7 +10,7 @@ import { getPage } from "@/lib/firebase";
 
 const Page = ({ params }: any) => {
   const { websiteId, pageId } = useParams();
-  const [funnelPageDetails, setFunnelPageDetails] = useState(null);
+  const [funnelPageDetails, setFunnelPageDetails] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
