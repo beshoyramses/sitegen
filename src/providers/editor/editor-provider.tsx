@@ -353,13 +353,11 @@ export type EditorContextData = {
 export const EditorContext = createContext<{
   state: EditorState
   dispatch: Dispatch<EditorAction>
-  subaccountId: string
   funnelId: string
   pageDetails: FunnelPage | null
 }>({
   state: initialState,
   dispatch: () => undefined,
-  subaccountId: '',
   funnelId: '',
   pageDetails: null,
 })
