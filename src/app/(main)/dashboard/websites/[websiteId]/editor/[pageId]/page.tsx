@@ -15,6 +15,11 @@ interface FunnelPageDetails {
 
 const Page = ({ params }: any) => {
   const { websiteId, pageId } = useParams();
+  
+  // Ensure websiteId is a string, handle cases where it's an array
+  const parsedWebsiteId = Array.isArray(websiteId) ? websiteId[0] : websiteId;
+  const parsedPageId = Array.isArray(pageId) ? pageId[0] : pageId;
+
   const [funnelPageDetails, setFunnelPageDetails] = useState<FunnelPageDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +27,7 @@ const Page = ({ params }: any) => {
   useEffect(() => {
     const fetchPageDetails = async () => {
       try {
-        const pageData = await getPage(websiteId, pageId);
+        const pageData = await getPage(parsedWebsiteId, parsedPageId);
         setFunnelPageDetails(pageData); // Ensure pageData matches FunnelPageDetails structure
       } catch (err) {
         console.error("Failed to fetch page details:", err);
@@ -32,10 +37,10 @@ const Page = ({ params }: any) => {
       }
     };
 
-    if (websiteId && pageId) {
+    if (parsedWebsiteId && parsedPageId) {
       fetchPageDetails();
     }
-  }, [websiteId, pageId]);
+  }, [parsedWebsiteId, parsedPageId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -48,13 +53,13 @@ const Page = ({ params }: any) => {
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 z-[20] bg-background overflow-hidden hide-scroll">
       {funnelPageDetails && (
-        <EditorProvider funnelId={websiteId} pageDetails={funnelPageDetails}>
+        <EditorProvider funnelId={parsedWebsiteId} pageDetails={funnelPageDetails}>
           <FunnelEditorNavigation
-            funnelId={websiteId}
+            funnelId={parsedWebsiteId}
             funnelPageDetails={funnelPageDetails}
           />
           <div className="h-full flex justify-center">
-            <FunnelEditor funnelPageId={pageId} websiteId={websiteId} />
+            <FunnelEditor funnelPageId={parsedPageId} websiteId={parsedWebsiteId} />
           </div>
           <FunnelEditorSidebar subaccountId={params.subaccountId} />
         </EditorProvider>
