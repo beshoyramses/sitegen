@@ -9,7 +9,7 @@ type Props = {
   subaccountId: string
 }
 
-const MediaUploadButton = ({ subaccountId }: Props) => {
+const MediaUploadButton = () => {
   return (
     <Button>
       Upload
