@@ -2,7 +2,7 @@ import React from "react";
 import { useModal } from "@/providers/ModalProvider";
 
 const Modal = () => {
-  const { isModalOpen, closeModal, modalContent } = useModal();
+  const { isModalOpen, closeModal, modalContent } = useModal() as any;
 
   if (!isModalOpen) return null;
 
