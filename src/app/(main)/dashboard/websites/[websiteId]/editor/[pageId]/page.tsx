@@ -1,22 +1,31 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import EditorProvider from "@/providers/editor/editor-provider";
-import FunnelEditorNavigation from "../_components/funnel-editor-navigation";
-import FunnelEditorSidebar from "../_components/editor-sidebar";
-import FunnelEditor from "../_components/website-editor";
-import { getPage } from "@/lib/firebase";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import EditorProvider from '@/providers/editor/editor-provider';
+import FunnelEditorNavigation from '../_components/funnel-editor-navigation';
+import FunnelEditorSidebar from '../_components/editor-sidebar';
+import FunnelEditor from '../_components/website-editor';
+import { getPage } from '@/lib/firebase';
 
+// Define the interface for the funnel page details
 interface FunnelPageDetails {
   id: string;
-  // Add other properties as needed
+  content?: string; // Optional property, add other properties as needed
 }
 
-const Page = ({ params }: any) => {
+// Define the type for the page component props
+interface PageProps {
+  params: {
+    subaccountId: string;
+    [key: string]: any; // Add more keys if necessary
+  };
+}
+
+const Page: React.FC<PageProps> = ({ params }) => {
   const { websiteId, pageId } = useParams();
-  
-  // Ensure websiteId is a string, handle cases where it's an array
+
+  // Ensure websiteId and pageId are strings (handle cases where they may be arrays)
   const parsedWebsiteId = Array.isArray(websiteId) ? websiteId[0] : websiteId;
   const parsedPageId = Array.isArray(pageId) ? pageId[0] : pageId;
 
@@ -28,10 +37,10 @@ const Page = ({ params }: any) => {
     const fetchPageDetails = async () => {
       try {
         const pageData = await getPage(parsedWebsiteId, parsedPageId);
-        setFunnelPageDetails(pageData); // Ensure pageData matches FunnelPageDetails structure
+        setFunnelPageDetails(pageData as FunnelPageDetails); // Ensure pageData is of type FunnelPageDetails
       } catch (err) {
-        console.error("Failed to fetch page details:", err);
-        setError("Failed to load page details.");
+        console.error('Failed to fetch page details:', err);
+        setError('Failed to load page details.');
       } finally {
         setLoading(false);
       }
