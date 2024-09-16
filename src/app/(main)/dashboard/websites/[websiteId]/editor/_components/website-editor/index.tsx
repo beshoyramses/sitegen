@@ -10,7 +10,7 @@ import Recursive from './website-editor-components/recursive'
 type Props = { 
   funnelPageId: string; 
   liveMode?: boolean; 
-  websiteId: string 
+  websiteId: string;
 }
 
 const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
@@ -33,16 +33,17 @@ const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
         const response = await getPage(websiteId, funnelPageId)
         console.log('Fetched page data:', response) // Log the response to inspect its structure
 
-        if (response && 'content' in response) { // Check if 'content' exists
+        // Ensure response and content exist, and cast content to string before parsing
+        if (response && typeof response.content === 'string') {
           dispatch({
             type: 'LOAD_DATA',
             payload: {
-              elements: JSON.parse(response.content || any),
+              elements: JSON.parse(response.content),
               withLive: !!liveMode,
             },
           })
         } else {
-          console.error('No content found in the response')
+          console.error('No valid content found in the response')
         }
       } catch (error) {
         console.error('Failed to fetch page data:', error)
