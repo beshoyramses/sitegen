@@ -43,16 +43,18 @@ const Page: React.FC = () => {
 
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 z-[20] bg-background overflow-hidden hide-scroll">
-      <EditorProvider funnelId={websiteId} pageDetails={funnelPageDetails}>
-        <FunnelEditorNavigation
-          funnelId={websiteId}
-          funnelPageDetails={funnelPageDetails}
-        />
-        <div className="h-full flex justify-center">
-          <FunnelEditor funnelPageId={pageId} websiteId={websiteId} />
-        </div>
-        <FunnelEditorSidebar subaccountId={subaccountId} />
-      </EditorProvider>
+      {websiteId && funnelPageDetails && (
+        <EditorProvider funnelId={websiteId} pageDetails={funnelPageDetails}>
+          <FunnelEditorNavigation
+            funnelId={websiteId}
+            funnelPageDetails={funnelPageDetails}
+          />
+          <div className="h-full flex justify-center">
+            <FunnelEditor funnelPageId={pageId || ""} websiteId={websiteId} />
+          </div>
+          <FunnelEditorSidebar subaccountId={subaccountId || ""} />
+        </EditorProvider>
+      )}
     </div>
   );
 };
