@@ -7,15 +7,15 @@ import { Button } from "@/components/ui/button"; // Assuming you have a Button c
 import { useRouter } from "next/navigation"; // For navigation
 
 const Page = () => {
-  const { domain } = useParams(); // Extract the domain parameter from the URL
-  const [websiteData, setWebsiteData] = useState(null);
+  const { domain } = useParams() as { domain: any }; // Cast to any to avoid type error
+  const [websiteData, setWebsiteData] = useState<any>(null); // Use any type for state
   const router = useRouter();
 
   useEffect(() => {
     const getWebsiteData = async () => {
       if (domain) {
         try {
-          const website = await fetchWebsiteByDomain(domain);
+          const website = await fetchWebsiteByDomain(domain as any); // Cast to any
           setWebsiteData(website);
         } catch (error) {
           console.error("Failed to fetch website data:", error);
@@ -45,7 +45,7 @@ const Page = () => {
               onClick={() => router.push('/dashboard/websites')}
               className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md transition duration-200"
             >
-            Dashboard
+              Dashboard
             </Button>
           </div>
         ) : (
