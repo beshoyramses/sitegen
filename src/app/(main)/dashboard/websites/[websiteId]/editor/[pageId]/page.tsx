@@ -8,17 +8,22 @@ import FunnelEditorSidebar from "../_components/editor-sidebar";
 import FunnelEditor from "../_components/website-editor";
 import { getPage } from "@/lib/firebase";
 
+interface FunnelPageDetails {
+  id: string;
+  // Add other properties as needed
+}
+
 const Page = ({ params }: any) => {
   const { websiteId, pageId } = useParams();
-  const [funnelPageDetails, setFunnelPageDetails] = useState("");
+  const [funnelPageDetails, setFunnelPageDetails] = useState<FunnelPageDetails | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPageDetails = async () => {
       try {
         const pageData = await getPage(websiteId, pageId);
-        setFunnelPageDetails(pageData);
+        setFunnelPageDetails(pageData); // Ensure pageData matches FunnelPageDetails structure
       } catch (err) {
         console.error("Failed to fetch page details:", err);
         setError("Failed to load page details.");
@@ -41,17 +46,19 @@ const Page = ({ params }: any) => {
   }
 
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 z-[20] bg-background overflow-hidden hide-scrool">
-      <EditorProvider funnelId={websiteId} pageDetails={funnelPageDetails}>
-        <FunnelEditorNavigation
-          funnelId={websiteId}
-          funnelPageDetails={funnelPageDetails}
-        />
-        <div className="h-full flex justify-center">
-          <FunnelEditor funnelPageId={pageId} websiteId={websiteId}/>
-        </div>
-        <FunnelEditorSidebar subaccountId={params.subaccountId} />
-      </EditorProvider>
+    <div className="fixed top-0 bottom-0 left-0 right-0 z-[20] bg-background overflow-hidden hide-scroll">
+      {funnelPageDetails && (
+        <EditorProvider funnelId={websiteId} pageDetails={funnelPageDetails}>
+          <FunnelEditorNavigation
+            funnelId={websiteId}
+            funnelPageDetails={funnelPageDetails}
+          />
+          <div className="h-full flex justify-center">
+            <FunnelEditor funnelPageId={pageId} websiteId={websiteId} />
+          </div>
+          <FunnelEditorSidebar subaccountId={params.subaccountId} />
+        </EditorProvider>
+      )}
     </div>
   );
 };

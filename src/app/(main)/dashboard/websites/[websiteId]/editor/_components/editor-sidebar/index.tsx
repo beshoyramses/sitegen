@@ -63,7 +63,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
             </TabsContent>
 
             {/* Components Tab */}
-            <TabsContent value="Components" showX={false}>
+            <TabsContent value="Components">
               <SheetHeader className="text-left p-6">
                 <SheetTitle className="text-white">Components</SheetTitle>
                 <SheetDescription className="text-gray-400">
