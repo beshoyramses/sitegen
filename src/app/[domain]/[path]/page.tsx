@@ -16,7 +16,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         // Fetch the page data from Firebase
-        const data = await getPageByDomain(domain, path);
+        const data = await getPageByDomain(domain as any, path as any);
         if (data) {
           setPageData(data);
         } else {
