@@ -117,7 +117,7 @@ const FunnelEditorNavigation = ({
               onBlur={handleOnBlurTitleChange}
               value={`/${funnelPageDetails.id}`}
             />
-            <span className="text-sm text-gray-400" onClick={() => {router.push(`/${domain}`)}}>
+            <span className="text-sm text-gray-400">
                View Your Live website
             </span>
           </div>
