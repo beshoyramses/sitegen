@@ -2,26 +2,239 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(170deg, #23233C, #201C1D,  #21202C, #19191B) no-repeat;
+  color: white; /* Adjust text color for better visibility */
+  min-height: 100vh; /* Adjust height as needed */
+
+
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.gradientBackground {
+  background-size: cover;
+  width: 100vw;  /* Adjust width as needed */
+}
+
+.nav-link-color {
+  color: #ffffffb1;
+  transition: color .75s ease-in-out;
+}
+
+.nav-link-color:hover {
+  color: #5454D4;
+}
+
+.border-opacity-70 {
+  border: 1px solid rgba(255, 255, 255, 0.7); /* White color with 70% opacity */
+  border-radius: 5px;
+}
+
+.opacity-background {
+  background: #222222c9;
+}
+
+.sidebar-bg {
+  background-color: #161A23;
+}
+
+.sidebar-links {
+  color: #ffffff61;
+  transition: all .6s;
+}
+
+.sidebar-links:hover { 
+  background-color: #2D2F39;
+}
+
+.arrow-color {
+  background-color: #161A23;
+  border: 1px solid #ffffff8c;
+}
+
+/* Default sidebar styles */
+.sidebar-bg {
+  color: #fff;
+}
+
+/* Styling for minimized sidebar */
+.sidebar-transition {
+  transition: width 0.3s ease;
+}
+
+/* Responsive styles */
+@media (max-width: 750px) {
+  .sidebar-bg {
+    width: 4rem; /* Minimized width for mobile */
   }
+}
+
+@media (min-width: 751px) {
+  .sidebar-bg {
+    width: fit-content; /* Full width for larger screens */
+  }
+}
+
+.sidebar-border {
+  border: 1px solid rgba(255, 255, 255, 0.068);
+}
+
+.App {
+  text-align: center;
+}
+
+#gjs {
+  border: 1px solid #ddd;
+  height: 100vh;
+}
+
+#blocks {
+  margin-top: 20px;
+}
+
+.panel__top {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.panel__basic-actions {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: #f5f5f5;
+  border-top: 1px solid #ddd;
+}
+
+.btn-toggle-borders {
+  margin-right: 5px;
+}
+
+.btn-open-export {
+  margin-right: 5px;
+}
+
+
+.text-block {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.gjs-pn-views-container {
+  display: flex;
+  gap: 10px;
+}
+
+.gjs-pn-views-container .fa {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#editor {
+  height: 100vh; /* Full viewport height */
+  overflow: auto; /* Enable scrolling if needed */
+}
+
+.panel__top .fa-plus {
+  font-size: 1.2rem;
+  color: #4CAF50;
+  background: #000;
+}
+
+.custom-border {
+  border-right: 1px solid rgba(255, 255, 255, 0.266);
+}
+
+.hide-scrool {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.hide-scrool::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
