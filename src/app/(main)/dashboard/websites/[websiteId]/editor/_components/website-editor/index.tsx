@@ -31,13 +31,13 @@ const FunnelEditor = ({ websiteId, funnelPageId, liveMode }: Props) => {
     const fetchData = async () => {
       try {
         const response = await getPage(websiteId, funnelPageId)
-        console.log('Fetched page data:', response) // Log the response to inspect structure
+        console.log('Fetched page data:', response) // Log the response to inspect its structure
 
-        if (response && response.content) { // Ensure content exists
+        if (response && 'content' in response) { // Check if 'content' exists
           dispatch({
             type: 'LOAD_DATA',
             payload: {
-              elements: JSON.parse(response.content),
+              elements: JSON.parse(response.content || any),
               withLive: !!liveMode,
             },
           })
