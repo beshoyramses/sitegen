@@ -6,23 +6,19 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
 } from '../ui/command'
-import MediaCard from './media-card'
-import { FolderSearch } from 'lucide-react'
 
 type Props = {
   data: GetMediaFiles
-  subaccountId: string
 }
 
-const MediaComponent = ({ data, subaccountId }: Props) => {
+const MediaComponent = ({ data }: Props) => {
   return (
     <div className="flex flex-col gap-4 h-full w-full hide-scrool">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl">Media Bucket</h1>
-        <MediaUploadButton subaccountId={subaccountId} />
+        <MediaUploadButton />
       </div>
       <Command className="bg-transparent">
         <CommandInput placeholder="Search for file name..." />
@@ -30,7 +26,7 @@ const MediaComponent = ({ data, subaccountId }: Props) => {
           <CommandEmpty>No Media Files</CommandEmpty>
           <CommandGroup heading="Media Files">
             <div className="flex flex-wrap gap-4 pt-4">
-              {data?.Media.map((file) => (
+              {/* {data?.Media.map((file) => (
                 <CommandItem
                   key={file.id}
                   className="p-0 max-w-[300px] w-full rounded-lg !bg-transparent !font-medium !text-white"
@@ -48,7 +44,7 @@ const MediaComponent = ({ data, subaccountId }: Props) => {
                     Empty! no files to show.
                   </p>
                 </div>
-              )}
+              )} */}
             </div>
           </CommandGroup>
         </CommandList>
