@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 // Create the context
-const ModalContext = createContext();
+const ModalContext = createContext("");
 
 // Create a provider component
 export const ModalProvider = ({ children }) => {
