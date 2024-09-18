@@ -2,9 +2,10 @@
 import { EditorBtns } from '@/lib/constants'
 import { EditorAction } from './editor-actions'
 import { Dispatch, createContext, useContext, useReducer } from 'react'
-import { FunnelPage } from '@prisma/client'
 
 export type DeviceTypes = 'Desktop' | 'Mobile' | 'Tablet'
+
+export type FunnelPage = any
 
 export type EditorElement = {
   id: string
