@@ -1,3 +1,3 @@
-export type ContactFormSchema = {
+export type ContactUserFormSchema = {
     '': ""
 }
