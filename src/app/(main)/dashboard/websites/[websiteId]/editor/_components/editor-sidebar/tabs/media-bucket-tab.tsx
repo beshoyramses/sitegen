@@ -9,7 +9,7 @@ type Props = {
 }
 
 const MediaBucketTab = (props: Props) => {
-  const [data, setData] = useState<string | null>(null); // Allows null as an initial value
+  const [data, setData] = useState<any | null>(null); // Allows null as an initial value
 
   useEffect(() => {
     const fetchData = async () => {
