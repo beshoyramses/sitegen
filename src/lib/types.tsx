@@ -5,3 +5,5 @@ export const ContactUserFormSchema = z.object({
   email: z.string().email(),
   message: z.string(),
 });
+
+export type GetMediaFiles = () => Promise<File[]>;
