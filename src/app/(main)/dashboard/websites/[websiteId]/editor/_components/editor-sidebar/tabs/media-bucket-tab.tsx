@@ -23,7 +23,6 @@ const MediaBucketTab = (props: Props) => {
     <div className="h-[900px] overflow-scroll p-4">
       <MediaComponent
         data={data}
-        subaccountId={props.subaccountId}
       />
     </div>
   )
