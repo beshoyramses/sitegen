@@ -1,7 +1,6 @@
 import { createPage } from "@/lib/firebase";
 import React, { useState } from "react";
-import { uploadImageToStorage } from "@/lib/firebase"; // Import your upload function
-
+import { uploadImageToStorage } from "@/lib/firebase";
 interface AddPageModalProps {
   websiteId: string;
   onClose: () => void;
@@ -14,6 +13,7 @@ const AddPageModal: React.FC<AddPageModalProps> = ({ websiteId, onClose }) => {
   const [previewImage, setPreviewImage] = useState<string | null>(null); // Preview image
   const [uploadProgress, setUploadProgress] = useState<number>(0); // State to track upload progress
   const [isUploading, setIsUploading] = useState<boolean>(false); // State to indicate if uploading
+  const [titleError, setTitleError] = useState<string | null>(null); // State to track title validation errors
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -23,8 +23,24 @@ const AddPageModal: React.FC<AddPageModalProps> = ({ websiteId, onClose }) => {
     }
   };
 
+  const validateTitle = (title: string) => {
+    const regex = /^[a-zA-Z0-9-_]+$/; // Allow only English letters, numbers, dashes, and underscores
+    if (!regex.test(title)) {
+      return "Title can only contain letters, numbers, dashes, and underscores.";
+    }
+    return null;
+  };
+
   const handleAddPage = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const error = validateTitle(title);
+    if (error) {
+      setTitleError(error);
+      return;
+    }
+    setTitleError(null); // Clear any previous errors
+
     try {
       let imageUrl = "";
       setIsUploading(true); // Start uploading
@@ -59,6 +75,8 @@ const AddPageModal: React.FC<AddPageModalProps> = ({ websiteId, onClose }) => {
               placeholder="Page title"
               required
             />
+            {/* Display error message if title validation fails */}
+            {titleError && <p className="text-red-500 text-sm mt-1">{titleError}</p>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-400 mb-2">Description</label>

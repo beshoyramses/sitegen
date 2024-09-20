@@ -5,21 +5,21 @@ const Plans = () => {
     {
       id: 1,
       name: 'Basic Plan',
-      price: '$19/month',
+      price: '$2/month',
       features: ['Feature 1', 'Feature 2', 'Feature 3'],
       description: 'Perfect for individuals looking to get started.'
     },
     {
       id: 2,
       name: 'Standard Plan',
-      price: '$49/month',
+      price: '$5/month',
       features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4'],
       description: 'Great for small teams or businesses.'
     },
     {
       id: 3,
       name: 'Premium Plan',
-      price: '$99/month',
+      price: '$10/month',
       features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4', 'Feature 5'],
       description: 'Best for larger teams and enterprises.'
     }
@@ -29,7 +29,7 @@ const Plans = () => {
     <div className='min-h-screen py-8'>
       <div className='container mx-auto px-4'>
         <h2 className='text-4xl font-bold text-center text-gray-100 mb-12'>
-          Our Plans
+          Our Plans (plans will be applied in the future its free for now, Enjoy :)
         </h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
           {plans.map((plan) => (

@@ -9,11 +9,6 @@ export const SIDEBARLINKS = [
     icon: <DashboardIcon />,
   },
   {
-    name: "Profile",
-    route: "/dashboard/profile",
-    icon: <AccountCircleIcon />,
-  },
-  {
     name: "Plans",
     route: "/dashboard/plans",
     icon: <PaymentIcon />,

@@ -107,7 +107,7 @@ const Page = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            Our Services
+            <a href="#services">Our Services</a>
           </motion.button>
         </motion.div>
         <motion.div

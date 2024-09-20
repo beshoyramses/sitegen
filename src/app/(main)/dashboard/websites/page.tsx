@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { fetchUserWebsites } from "@/lib/firebase"; // Import your Firebase function
 import { useUser } from "@clerk/nextjs"; // Clerk to get user info
@@ -8,6 +7,7 @@ import CreateWebsiteForm from "@/components/create-website-form";
 import { useRouter } from "next/navigation";
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import CastIcon from '@mui/icons-material/Cast';
+import CircularProgress from "@mui/material/CircularProgress"; // Material UI spinner
 
 const ManageWebsitesPage = () => {
   const [websites, setWebsites] = useState([]);
@@ -15,6 +15,7 @@ const ManageWebsitesPage = () => {
   const router = useRouter();
 
   const [isFormOpen, setIsFormOpen] = useState(false); // Control the form visibility
+  const [loading, setLoading] = useState(true); // Control loading state
 
   const handleAddWebsiteClick = () => {
     setIsFormOpen(true); // Open the form when "Add New Website" is clicked
@@ -29,10 +30,13 @@ const ManageWebsitesPage = () => {
     const loadWebsites = async () => {
       if (user?.id) {
         try {
+          setLoading(true); // Start loading
           const userWebsites = await fetchUserWebsites(user.id);
           setWebsites(userWebsites);
         } catch (error) {
           console.error("Failed to load websites:", error);
+        } finally {
+          setLoading(false); // End loading
         }
       }
     };
@@ -57,58 +61,73 @@ const ManageWebsitesPage = () => {
 
         {isFormOpen && <CreateWebsiteForm onClose={handleCloseForm} />}
 
-        {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {websites.map((website) => (
-            <div
-              key={website.id}
-              className="bg-gray-900 hover:bg-gray-800 transition-all duration-200 p-6 rounded-lg shadow-lg"
-            >
-              {/* Website Image */}
-              {website.imageUrl && (
-                <div className="mb-4">
-                  <img
-                    src={website.imageUrl}
-                    alt={website.name}
-                    className="w-full h-48 object-cover rounded-md"
-                  />
-                </div>
-              )}
-
-              {/* Website Information */}
-              <div className="text-center">
-                <h2
-                  className="text-2xl sm:text-3xl font-semibold text-indigo-400 mb-2 cursor-pointer"
-                  onClick={() => {
-                    router.push(`/dashboard/websites/${website.id}`);
-                  }}
-                >
-                  {website.name}
-                </h2>
-
-                <div className="flex flex-col gap-2 mt-4">
-                <button
-                  className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-lg transition-all"
-                  onClick={() => {
-                    router.push(`/dashboard/websites/${website.id}`);
-                  }}
-                >
-                  <ManageHistoryIcon className="mr-2" /> Manage
-                </button>
-                <button
-                  className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-lg transition-all"
-                  onClick={() => {
-                    router.push(`/${website.domain}`);
-                  }}
-                >
-                  <CastIcon className="mr-2" /> Visit: {website.domain}
-                </button>
+        {/* Loading state */}
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <CircularProgress /> {/* Material UI spinner */}
+          </div>
+        ) : (
+          // No websites message
+          <>
+            {websites.length === 0 ? (
+              <div className="text-center text-gray-400 text-xl">
+                No websites yet.
               </div>
+            ) : (
+              // Responsive Grid Layout
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {websites.map((website) => (
+                  <div
+                    key={website.id}
+                    className="bg-gray-900 hover:bg-gray-800 transition-all duration-200 p-6 rounded-lg shadow-lg"
+                  >
+                    {/* Website Image */}
+                    {website.imageUrl && (
+                      <div className="mb-4">
+                        <img
+                          src={website.imageUrl}
+                          alt={website.name}
+                          className="w-full h-48 object-cover rounded-md"
+                        />
+                      </div>
+                    )}
 
+                    {/* Website Information */}
+                    <div className="text-center">
+                      <h2
+                        className="text-2xl sm:text-3xl font-semibold text-indigo-400 mb-2 cursor-pointer"
+                        onClick={() => {
+                          router.push(`/dashboard/websites/${website.id}`);
+                        }}
+                      >
+                        {website.name}
+                      </h2>
+
+                      <div className="flex flex-col gap-2 mt-4">
+                        <button
+                          className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-lg transition-all"
+                          onClick={() => {
+                            router.push(`/dashboard/websites/${website.id}`);
+                          }}
+                        >
+                          <ManageHistoryIcon className="mr-2" /> Manage
+                        </button>
+                        <button
+                          className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-lg transition-all"
+                          onClick={() => {
+                            router.push(`/${website.domain}`);
+                          }}
+                        >
+                          <CastIcon className="mr-2" /> Visit: {website.domain}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
