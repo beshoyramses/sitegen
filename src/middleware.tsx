@@ -8,7 +8,7 @@ export default authMiddleware({
     const { userId } = auth || {};
     const { nextUrl } = req;
 
-    const isPublicRoute = nextUrl.pathname === '/sign-in' || nextUrl.pathname === '/sign-up' || nextUrl.pathname === '/';;
+    const isPublicRoute = nextUrl.pathname === '/sign-in' || nextUrl.pathname === '/sign-up' || nextUrl.pathname === '/' || nextUrl.pathname === '/[domain]/[path]';
 
     // If the user is not authenticated and tries to access a protected route
     if (!userId && !isPublicRoute) {
